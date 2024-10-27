@@ -1,0 +1,153 @@
+      Carolyn McAughren A1 CSCI 479 Machine Learning 
+
+Given a data set with descriptive attributes "Supply_Level", "Valve_Position" and 
+"Measurement", a decision tree is built to predict "STATUS". 
+
+COMPILE AND RUN:
+   To run the program, and see the decision tree built, please enter:
+      "python3 decisiontree.py A1-data.csv"
+   or substitute the "A1-data.csv" for the path to the data set.
+
+   In addition, you can run the lab2.py file only to see a more detailed break down of 
+   how the best split of Measurement was found. Please enter:
+      "python3 lab2.py A1-data.csv"
+
+   decisiontree.py will call the needed functions in lab2.py to split Measurement on its own, 
+   so running lab2.py directly is not nessecary. It will just give more detailed output 
+   messages explaining how the best split was found, and what that value was.
+
+   Both of these programs have a good amount of output, so redirecting output to a textfile
+   may make for easier viewing. 
+
+
+DESCRITIZATION ALGORITHM:
+   Lab2 was selected over Lab1 as it provides a more effective split.
+   The best split value to convert Measurement from a continuous to a categorical 
+   attribute was found by calculating the GINI for each possible split value, and 
+   selecting the value with the lowest GINI value as the split.
+
+   Running lab2.py will display the tables created to calculate these GINI values.
+   Comments in lab2.py are thorough and break down what each value in the tables are 
+   at each stage of the calculations.
+   
+   The split values considered are the values which Measurement can take on.
+   Eg. a split value of 170 will place all values less than and equal to 170 into M1
+    and all values above 170 into M2.
+
+   Gini for each split was calculated using:
+
+      GINI = (M1/total_items) *
+                  (1 - (M1N/M1)**2 - (M1C/M1)**2) + 
+             (M2/total_items) *
+                  (1 - (M2N/M2)**2 - (M2C/M2)**2)
+      where:
+         a**b means "a to the power of b"
+         total_items is the total number of items before the split. 
+         M1 is the number of items with Measurement less than or equal to the current split value
+         M2 is the number of items with Measurement greater than the current split value
+         M1N is the number of M1 items with status Normal
+         M1C is the number of M1 items with status Critical
+         M2N is the number of M2 items with status Normal
+         M2C is the number of M2 items with status Critical
+
+   The Measurement value with the lowest GINI was selected as a the split value for
+   Measurement column. 
+
+      Selected split value: 170
+
+   Items with a measurement less than or equal to 170 were given "Measurement_Category = 0"
+   Items with a measurement greater than 170 were given "Measurement_Category = 1"
+
+   Final table with these Measurement_Category values is printed out if lab2.py is ran alone.
+
+BEST ATTRIBUTE SELECTION ALGORITHM:
+   A recursive function "build_binary_tree" was made to build the decision tree, and it 
+   follows an ID3 style algorithm to determine the best split attribute at each fork 
+   in the tree.
+   
+   As build_binary_tree builds the tree, it will output messages about what data is in that
+   slice of the dataset and what split is selected next, so that the tree can be visualized.
+   
+   There are a few base cases which will stop a recursion branch: 
+   when there are only items of Critical status or Normal Status (then the STATUS is known 
+   definatively) or when there are no more Attributes by which to divide the data.
+   At that point, a best guess at STATUS is made based on the distribution of the data
+   at that time. 
+
+   At each split, "find_best_split" is called to determine which attribute should be used
+   next to fork the data. This function will check the entropy of each potential split (the
+   remaining attributes not yet used in that branch) and will return the attribute which has
+   the lowest entropy split. 
+
+   Entropy is calculated for each potential split attribute. Each of these entropys are 
+   calculated value by value (each 'value' the 'attribute' can take on e.g. each node that the
+   parent node splits into) and then those are summed to get the entropy for the entire split.
+   The lowest entropy seen so far is tracked, and the attribute with that lowest entropy is 
+   the one returned after all potential attributes have been considered. 
+   Neither STATUS nor Event_ID are considered as potential split attributes, and the
+   continuous Measurement values are also removed as a candidate early on (and replaced with
+   the categorial version).
+
+   Entropy formula is as follows:
+
+   Attribute A splits the dataset into some n portions M. We calculate entropy of each these n 
+   M portions of the dataset seperately, then sum to get the total entropy of the A split.
+   
+   To calculate the entropy of each potential split attribute:
+
+      for all n segments M that A splits into, find:
+        
+        if (valueCount == 0) or (valueNCount == 0) or (valueCCount == 0):
+            valueEntropy = 0
+            #if there are no items, no Normal status items, or no Critical items, entropy for 
+            #this part of the split is 0
+         else: 
+            valueEntropy = (valueCount/total_items) * 
+                           ( (-1)*(valueNCount/valueCount)*(math.log(valueNCount/valueCount, 2)) +
+                             (-1)*(valueCCount/valueCount)*(math.log(valueCCount/valueCount, 2))  )
+         
+         entropy = entropy + valueEntropy
+         #sum of the entropy of all n M segments of A to get the total entropy for this split
+
+      where: 
+         math.log(N, b) finds the log of N, with a base of b
+         total_items is the number of items in A before the split
+         valueCount is the number of items in this M group after the split (items with value M)
+         valueNCount is the number of items in M with Normal status
+         valueCCount is the number of items in M with Critical status
+
+   The attribute with the lowest split entropy is selected next to fork the data.
+
+FINAL DECISION TREE:
+   The decision tree will also be outputted level by level when decisiontree.py is ran, 
+   as the tree is built, and each fork will be explained.
+
+   With only one split, Measurement with a split value of 170, we can know for
+   sure all values above 170 are Critical, and those below are likely Normal
+   (with a misclassification rate of 3%). This may be good enough to stop here, but the rest 
+   of the tree is shown to be thorough.
+
+   The misclassification rates and entropy for each split is printed out when 
+   decisiontree.py is ran. 
+
+                              Measurement Category?
+                                    /         \
+                                   /           "1" (>170)
+                           "0" (<= 170)            \
+                                 /              CRITICAL 
+                                /                    
+                           Supply___Level?        
+                         /       |         \
+                       /         |           \
+                    "low"     "median"        "high"
+                     /           |               \
+            Valve Pos?        Valve Pos?       Valve Pos?
+            /     \            /     \           |     \ 
+          "on"    "off"      "on"    "off"      "on"    "off" 
+         /          \         /         \        |         \
+       NORMAL      NORMAL    NORMAL      NORMAL  NORMAL      NORMAL 
+
+
+BUGS:
+   None known.
+

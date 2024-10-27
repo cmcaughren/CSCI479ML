@@ -1,0 +1,7 @@
+ACCURACY TABLE
+
+              pred_unacc  pred_acc  pred_good  pred_vgood
+actual_unacc      1163.0      45.0        2.0         0.0
+actual_acc          88.0     286.0       10.0         0.0
+actual_good          0.0      46.0       21.0         2.0
+actual_vgood         0.0      36.0        0.0        29.0

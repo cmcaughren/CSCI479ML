@@ -1,0 +1,158 @@
+## Assignment 4 CSCI479 Machine Learning 
+# Carolyn McAughren November 10 2022
+
+## Problem Description:
+   The problem scenario of this assignment is from our optional textbook, Fundamentals of Machine Learning for Predictive Data Analytics.
+
+   The European Space Agency wants to build a model to predict the amount of oxygen that an astronaut consumes when performing five minutes of intense physical work. The descriptive features for the model will be the age of the astronaut and their average heart rate throughout the work.
+
+   The regression model is:   
+      OXYCON = w[0] + w[1] * AGE + w[2] * HEARTRATE
+   
+   The table below shows a historical dataset that has been collected for this task:
+      ID	   AGE	HEARTRATE	OXYCON
+      1	   41	   138	      37.99
+      2	   42	   153	      47.34
+      3	   37	   151	      44.38
+      4	   34	   133	      28.17
+      5	   48	   126	      27.07
+      6	   44	   145	      37.85
+      7	   43	   158	      44.72
+      8	   46	   143	      36.42
+      9	   37	   138	      31.21
+      10	   38	   158	      54.85
+      11	   43	   143	      39.84
+      12	   43	   138	      30.83
+   
+   The same data in csv format can be found in: 
+      A4-data.csv.
+
+   Your tasks:
+      Write an error based learning program to tune the weights in the above given multivariate linear regression model.
+      Specifically, your program can set the following (adjustable) constants:
+         * the learning rate is 0.000002;
+         * the initial weights of the model are set as:
+         * w[0] = -59.5, w[1] = -0.15, and w[2] = 0.60;
+         * the iteration number is 10; and
+         * the acceptable threshold for the model error (the sum of squared errors) is 3.0 (calculated as 0.25 times
+         * the number of training instances).
+   Then, the steps of your program should perform in one iteration are:
+      1. make a prediction for each training instance using the given model with the current weights;
+      2. calculate the sum of squared errors for the set of the predictions generated in the previous step as the model error;
+      3. adjust the weights based on the calculated model error from the previous step and the given learning rate using the gradient descent algorithm;
+   Repeat the above steps until either the designated iteration number is reached, or the calculated model error is below the given acceptable threshold.
+   
+   For each iteration, display the model error and the adjusted weights of the model, in an easy to understand format. At the end of the iterations (end of your program), display the original data with an added column that shows your model's prediction.
+
+## How to compile and run the program
+   To run the program and populate the tables, please enter:
+      'python3 A4.py A4-data.csv'
+   or substitute whatever path locations are needed for the data set.
+
+## Program Sample Run Output
+   
+   Gradient Descent Algorithm Output
+   Starting weight values:
+   w[0]: -59.5, w[1]: -0.15, w[2]: 0.6
+
+   Iteration: 1
+   Model Error: 1992.627150000001
+   w[0]: -59.49957066, w[1]: -0.13222056590527997, w[2]: 0.6595323460447465
+
+   Iteration: 2
+   Model Error: 506.5118833932694
+   w[0]: -59.49936423503195, w[1]: -0.12365264650257769, w[2]: 0.6882258538402035
+
+   Iteration: 3
+   Model Error: 161.28992716691175
+   w[0]: -59.49926524960902, w[1]: -0.11952444934679836, w[2]: 0.7020558014240951
+
+   Iteration: 4
+   Model Error: 81.09621691633143
+   w[0]: -59.49921804739259, w[1]: -0.11753608808576042, w[2]: 0.7087218790831405
+
+   Iteration: 5
+   Model Error: 62.467887654148875
+   w[0]: -59.49919580339915, w[1]: -0.11657907418132928, w[2]: 0.7119351477686773
+
+   Iteration: 6
+   Model Error: 58.14085260288646
+   w[0]: -59.499185588647784, w[1]: -0.11611914347848284, w[2]: 0.7134842473963722
+
+   Iteration: 7
+   Model Error: 57.13583888578445
+   w[0]: -59.49918117168835, w[1]: -0.1158987938224925, w[2]: 0.714231258322796
+
+   Iteration: 8
+   Model Error: 56.9024483091097
+   w[0]: -59.49917954911545, w[1]: -0.11579391552167892, w[2]: 0.7145916820330744
+
+   Iteration: 9
+   Model Error: 56.848265890897224
+   w[0]: -59.499179273361726, w[1]: -0.11574469076395406, w[2]: 0.7147657800027043
+
+   Iteration: 10
+   Model Error: 56.83569426516427
+   w[0]: -59.49917964673538, w[1]: -0.11572228883865128, w[2]: 0.714850073327359
+
+   Gradient Descent Algorithm Final Output:
+      AGE  HEARTRATE  OXYCON  PREDICTION_OXYCON      DIFF
+   ID                                                     
+   1    41        138   37.99          34.405517 -3.584483
+   2    42        153   47.34          45.012545 -2.327455
+   3    37        151   44.38          44.161457 -0.218543
+   4    34        133   28.17          31.641322  3.471322
+   5    48        126   27.07          25.017260 -2.052740
+   6    44        145   37.85          39.062300  1.212300
+   7    43        158   44.72          48.471074  3.751074
+   8    46        143   36.42          37.401156  0.981156
+   9    37        138   31.21          34.868406  3.658406
+   10   38        158   54.85          49.049685 -5.800315
+   11   43        143   39.84          37.748322 -2.091678
+   12   43        138   30.83          34.174072  3.344072
+
+## Model Error Calculation
+   
+   Using the "sum of squared errors loss function" from the optional textbook, Fundamentals of 
+   Machine Learning for Predictive Data Analytics on page 389,  
+      ModelError = sum, for all i items in dataset[(expectedOxycon - predictedOcycon)squared]/2
+   produced a final ModelError of 56.83569426516427, quite high compared to the threshold. 
+   
+   Using a similiar Model Error algorithm, the "mean squared error" (found, along with other model error
+   algorithms, at https://www.dataquest.io/blog/understanding-regression-error-metrics/), 
+   the ModelError could be divided by the number of items in the dataset, instead of by 2.
+   Using this, ModelError = sum, for all i items in dataset[(expectedOxycon - predictedOcycon)squared]/numDataItems
+   produced a final ModelError of 9.472615710860712, which is still over the threshold but
+   seems to be more in line with the threshold limit set. 
+   
+   No matter which model error algorithm I used, the error after 10 iterations was always higher
+   than the threshold of 3.0.    
+   I have left the program using the sum of squared errors loss function.
+
+## Weight Adjustments
+   Weights are adjusted using the gradient descent algorithm. An error delta is calculated for each weight
+   based on the models oxycon prediction for each item in the dataset. Each weight is tweaked each iteration 
+   based on its error delta multipled by the learning rate, and the gradient descent algorithm runs for 10
+   iterations, or until the overall model error is below the threshold, 3.0 in this case.
+
+   Error Delta is calculated as follows:
+      errorDelta for weight j = 
+            sum, for all i items in the dataset[ (expectedOxycon - predictedOxycon)*Xj]
+            where Xj is the attribute value which pairs with weight j. eg. w[1] goes with AGE
+
+## Notes
+   I could not get my model to perform better than modelError 56.83, much
+   higher than the set threshold of 3.0.
+   Giving the model 100 iterations, it still leveled out around 56.83 and would not improve.
+   I tried tweaking the model learning rate as well:
+   Giving the model a learning rate of 0.00002 caused the model error to increase, 
+   10 iterations landed on an error of 9399636993.119396.  
+   Using a learning rate of 0.0000002 did allow the error to go down, but in 10 iterations the
+   error was still only 774.554688988776.
+   Using a learning rate of 0.0000002 and giving the model 100 iterations cause the model error
+   to bottom out at a modelError of 56.86, close to how the learning rate of 0.000002 did.
+   I am not sure, but I am wondering if this model may be caught in a local minima and cannot bounce out?
+   If I were to continue to tweak this algorithm to try and improve the error of prediction, 
+   I would next try using a Learning Rate Decay to see if gradually lowering the learning rate
+   once the model approached that error threshold of 56.83 could help it continue to narrow
+   the error margin.  

@@ -1,0 +1,70 @@
+**Assignment 2 Carolyn McAughren CSCI 479 Machine Learning**
+
+# COMPILE AND RUN:
+   To run the program, and see the recommendations, please enter:
+      'python3 lab3.py A2-training-data.csv A2-testing-data.csv'
+   or substitute whatever path locations are needed for each data set.
+
+# FORMAT OF USER VECTOR 
+There were 101 movies, each one was made a column index. 
+The Users were made into row indices. 
+Then, if a user rated a movie, the 5 star rating was normalized into a number between 0 and 1
+and logged as the value for that user row and movie column.
+If a user had not watched/rated a movie, a score of 0 was listed under that movie for that user.
+This format was used so that each user row vector could be easily compared to others, 
+and all columns would match up even if the two users being compared had no watched movies 
+in common.
+ 
+Date of grade was excluded from the analysis. The range of dates for ratings is narrow, 
+it would be overfitting to consider in this model. In the future, if the dataset grows to 
+include ratings over a longer period of time, there should be a preprocessing step added 
+where only movies rated recently are considered in the feature space, or older ratings may 
+be weighted less in the distance calculation. In this case however, we have no old or out of 
+date ratings to consider, and the spread of the dates of ratings is so close that to consider 
+the difference in dates between them would be overfitting. For this reason dates have been
+eliminated from consideration in this model.
+
+# SIMILARITY FUNCTION USED
+I chose the Euclidean Distance formula to measure distance between user vectors.
+This formula was selected because it is a widely used, common metric used to measure distance
+ in the KNN algorithm, and the formula is straight forward and easy to use.
+
+  **EuclideanDistance = sqrt( sum(from i = 0 up to 101, (userA[i] – userB[i])^2) )**
+      where userN[i] is the rating userN gave movie i 
+
+# RECOMMENDATION CRITERIA
+To recommend movies to the 10 users in the testing data set, each user was measured against
+all the users in the training data set. The results were sorted by distance (measured using
+Euclidean distance formular), allowing the K nearest neighbors to be easily identified.
+I selected k = 10, because it seemed like a manageable number which returned a good 
+selection of movie recommendations (but not too many). 
+Once the 10 nearest neighbors were selected, I pulled a list of movies those users had rated
+5 stars. I tested using 4 and 5 star grades, but this returned too many recommendations 
+than was useful, so I increased the standard to only 5 star ratings.
+I then grouped the movie id's by id, and obtained counts for each to determine if any movies
+were rated 5 stars by multiple users in the 10 nearest neighbors. 
+These should be recommended to the test user first, but the other recommendations are 
+still useful. 
+Between 19 and 32 recommendations were found for each user in the testing data set.
+If more or less recommendations were desired, parameters could be adjusted, but I felt this 
+was a good amount of recommendations to end with.
+
+
+# RECOMMENDATION RESULTS
+
+Results and counts found of each can be seen by running the program but are listed
+here also. Numbers listed first were rated highly by more than one near neighbor.
+**991:** 16, 39, 59... 1, 5, 9, 14, 15, 19, 22, 26, 28, 38, 42, 48, 49, 68, 71, 74, 77, 83, 87, 90, 93
+**992:** 21, 73... 2, 4, 10, 16, 27, 31, 35, 37, 44, 49, 50, 55, 64, 71, 75, 82, 88, 89, 93
+**993:** 44, 17... 7, 19, 28, 29, 33, 35, 39, 47, 50, 62, 66, 77, 79, 81, 82, 85, 92, 96
+**994:** 34... 2, 6, 24, 37, 40, 43, 49, 51, 53, 55, 58, 59, 60, 62, 63, 64, 65, 73, 75, 86, 92, 95
+**995:** 42... 0, 7, 9, 10, 13, 16, 18, 23, 25, 26, 27, 37, 50, 52, 56, 65, 71, 90, 91, 94
+**996:** 61, 49... 5, 7, 18, 19, 20, 22, 25, 27, 28, 34, 37, 40, 43, 55, 56, 58, 60, 62, 65, 66, 70, 72, 75, 79, 83, 92, 95, 98
+**997:** 29, 34, 92, 96... 6, 8, 9, 12, 22, 24, 31, 36, 39, 43, 44, 50, 51, 55, 61, 62, 64, 65, 70, 74, 83, 88, 91
+**998:** 1, 28, 73, 99 ... 2, 4, 8, 15, 16, 26, 41, 47, 56, 59, 65, 66, 68, 75, 80, 82, 88, 96
+**999:** 6, 34, 49, 55, 62, 64, 79... 2, 4, 8, 10, 15, 24, 28, 29, 32, 35, 36, 41, 45, 51, 58, 59, 63, 71, 72, 78, 81, 83, 92, 94, 96, 98
+**1000:** 74, 79... 0, 5, 8, 11, 13, 15, 21, 22, 23, 24, 30, 37, 45, 46, 55, 60, 62, 65, 70, 77, 82, 86, 89, 93, 98
+
+
+# KNOWN BUGS
+None known.

@@ -1,0 +1,61 @@
+## Assignment 5 CSCI479 Machine Learning 
+# Carolyn McAughren November 27 2022
+
+## Problem Description:
+   In the csv file Points.csv, each line represents one data point in a three dimensional space, 
+   where ID is an artificial id of the data point, and A, B, C represent the data item's position 
+   in the three dimensions respectively. There are altogether 50 data points collected in the file.
+
+   These data points don't have class labels. But it is necessary to classify these data points 
+   into two classes and to assign a target class label to each data point.
+
+   Your tasks:
+
+   Write a program that implements K-Means algorithm to cluster the data points given in the 
+   file into two clusters.
+
+   The basic K-Means algorithm is shown below:
+
+   Select K points as the initial centroids;
+   repeat
+       Form K clusters by assigning all points to the closest centroid;
+       Recompute the centroid of each cluster;
+   until the centroids don't change
+   Your program should set the K as a constant and set K's value as 2 for this application 
+   specifically. Your program should use Euclidean distance as the distance function for this
+    application.
+
+   Just in case this application runs too long to find stable centroids, you can set a constant
+    N (to a relatively not too small number) and change the terminate condition to "until the 
+    centroids don't change or N repetitions are done".
+
+   At the end of the execution, your program should output the coordinates (values of A, B and C) 
+   of the two final centroids and the modified data points (including the original data points 
+   and their corresponding assigned class labels) to a file called result.txt. The format of the 
+   data in result.txt should be user friendly. You can choose your own class label representations,
+    or simply use C1 and C2 as the two class labels.
+
+
+
+## How to compile and run the program
+   To run the program and populate result.txt file, please enter:
+      'python3 A5.py Points.csv'
+   or substitute whatever path locations are needed for the data set.
+
+## Results
+
+   Final results of the K-Means Algorithm clustering is found in results.txt 
+
+   After running the program multiple times, the same final centroids are found over and over:
+      Final C1 centroid = [5.32, 10.36, 14.2]
+      Final C2 centroid = [11.84, 3.04, 4.6]
+   Though the program was given up to N = 100 iterations to settle into final centroids, 
+   this final set is usually found within the first 4 iterations.
+
+##Notes for Marker
+   Centroids are recalculated each iteration by finding the average A, B, C coordinates
+   of all of the points within that centroids label Category (C1 or C2).
+   This is done by summing the A, B or C coordinates as each point is iterated over
+   when calculating distances to determine the label.
+   Initial centroids are randomly selected from all the points in the data set.
+   Euclidean Distance was used to calculate distance between the centroids and each point. 

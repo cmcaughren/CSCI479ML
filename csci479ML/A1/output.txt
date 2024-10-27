@@ -1,0 +1,91 @@
+DECISION TREE
+
+Level: 0, value 'root' of attribute 'entire dataset'
+Number Items: 5200, Number of Normal Status Items: 4136, Number of Critical Status Items: 1064
+Misclassification Rate is: 0.20462 
+Known Attributes: {}
+NEXT BEST SPLIT SELECTED: Measurement_Category with an Entropy of 0.1585
+
+
+----Level: 1, value '0' of attribute 'Measurement_Category'
+----Number Items: 4263, Number of Normal Status Items: 4136, Number of Critical Status Items: 127
+----Misclassification Rate is: 0.02979 
+----Known Attributes: {'Measurement_Category': 0}
+----NEXT BEST SPLIT SELECTED: Supply_Level with an Entropy of 0.16389
+
+
+--------Level: 2, value 'median' of attribute 'Supply_Level'
+--------Number Items: 1078, Number of Normal Status Items: 1047, Number of Critical Status Items: 31
+--------Misclassification Rate is: 0.02876 
+--------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'median'}
+--------NEXT BEST SPLIT SELECTED: Valve_Position with an Entropy of 0.18446
+
+
+------------Level: 3, value 'off' of attribute 'Valve_Position'
+------------Number Items: 509, Number of Normal Status Items: 488, Number of Critical Status Items: 21
+------------Misclassification Rate is: 0.04126 
+------------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'median', 'Valve_Position': 'off'}
+------------No more valid attributes to continue splitting data!
+------------Based on the distribution of status in items of this leafnode, we make a best-guess.
+------------STATUS MOST LIKELY: Normal
+
+------------Level: 3, value 'on' of attribute 'Valve_Position'
+------------Number Items: 569, Number of Normal Status Items: 559, Number of Critical Status Items: 10
+------------Misclassification Rate is: 0.01757 
+------------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'median', 'Valve_Position': 'on'}
+------------No more valid attributes to continue splitting data!
+------------Based on the distribution of status in items of this leafnode, we make a best-guess.
+------------STATUS MOST LIKELY: Normal
+
+--------Level: 2, value 'low' of attribute 'Supply_Level'
+--------Number Items: 2500, Number of Normal Status Items: 2484, Number of Critical Status Items: 16
+--------Misclassification Rate is: 0.0064 
+--------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'low'}
+--------NEXT BEST SPLIT SELECTED: Valve_Position with an Entropy of 0.05419
+
+
+------------Level: 3, value 'off' of attribute 'Valve_Position'
+------------Number Items: 1142, Number of Normal Status Items: 1130, Number of Critical Status Items: 12
+------------Misclassification Rate is: 0.01051 
+------------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'low', 'Valve_Position': 'off'}
+------------No more valid attributes to continue splitting data!
+------------Based on the distribution of status in items of this leafnode, we make a best-guess.
+------------STATUS MOST LIKELY: Normal
+
+------------Level: 3, value 'on' of attribute 'Valve_Position'
+------------Number Items: 1358, Number of Normal Status Items: 1354, Number of Critical Status Items: 4
+------------Misclassification Rate is: 0.00295 
+------------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'low', 'Valve_Position': 'on'}
+------------No more valid attributes to continue splitting data!
+------------Based on the distribution of status in items of this leafnode, we make a best-guess.
+------------STATUS MOST LIKELY: Normal
+
+--------Level: 2, value 'high' of attribute 'Supply_Level'
+--------Number Items: 685, Number of Normal Status Items: 605, Number of Critical Status Items: 80
+--------Misclassification Rate is: 0.11679 
+--------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'high'}
+--------NEXT BEST SPLIT SELECTED: Valve_Position with an Entropy of 0.51009
+
+
+------------Level: 3, value 'on' of attribute 'Valve_Position'
+------------Number Items: 341, Number of Normal Status Items: 314, Number of Critical Status Items: 27
+------------Misclassification Rate is: 0.07918 
+------------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'high', 'Valve_Position': 'on'}
+------------No more valid attributes to continue splitting data!
+------------Based on the distribution of status in items of this leafnode, we make a best-guess.
+------------STATUS MOST LIKELY: Normal
+
+------------Level: 3, value 'off' of attribute 'Valve_Position'
+------------Number Items: 344, Number of Normal Status Items: 291, Number of Critical Status Items: 53
+------------Misclassification Rate is: 0.15407 
+------------Known Attributes: {'Measurement_Category': 0, 'Supply_Level': 'high', 'Valve_Position': 'off'}
+------------No more valid attributes to continue splitting data!
+------------Based on the distribution of status in items of this leafnode, we make a best-guess.
+------------STATUS MOST LIKELY: Normal
+
+----Level: 1, value '1' of attribute 'Measurement_Category'
+----Number Items: 937, Number of Normal Status Items: 0, Number of Critical Status Items: 937
+----Misclassification Rate is: 0.0 
+----Known Attributes: {'Measurement_Category': 1}
+----STATUS KNOWN: CRITICAL
+
